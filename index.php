@@ -1,16 +1,21 @@
 <?php
 require_once 'config/database.php';
-require_once 'controllers/TemaController.php';
-require_once 'controllers/UsuarioController.php';
 
-// Enrutamiento simple
-$controlador = $_GET['controller'] ?? 'usuario';
-$accion = $_GET['action'] ?? 'login';
+$controllerName = $_GET['controller'] ?? 'usuario';
+$action = $_GET['action'] ?? 'login';
 
-if ($controlador == 'tema') {
-    $controlador = new TemaController();
+if ($controllerName == 'tema') {
+    require_once 'controllers/TemaController.php';
+    $controller = new TemaController();
+} elseif ($controllerName == 'comentario') {
+    require_once 'controllers/ComentarioController.php';
+    $controller = new ComentarioController();
+} elseif ($controllerName == 'admin') {
+    require_once 'controllers/AdminController.php';
+    $controller = new AdminController();
 } else {
-    $controlador = new UsuarioController();
+    require_once 'controllers/UsuarioController.php';
+    $controller = new UsuarioController();
 }
 
-$controlador->$accion();
+$controller->$action();

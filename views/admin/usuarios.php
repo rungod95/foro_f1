@@ -13,9 +13,13 @@
         <tr>
             <td><?= htmlspecialchars($u['nombre']) ?></td>
             <td><?= htmlspecialchars($u['email']) ?></td>
-            <td><?= $u['rol'] ?></td>
             <td>
-                <!-- Cambiar rol -->
+    <span class="<?= $u['rol'] == 'admin' ? 'rol-admin' : 'rol-usuario' ?>">
+        <?= $u['rol'] ?>
+    </span>
+            </td>
+
+            <!-- Cambiar rol -->
                 <form method="POST" action="<?= BASE_URL ?>index.php?controller=admin&action=cambiarRol" style="margin-bottom: 5px;">
                     <input type="hidden" name="id_usuario" value="<?= $u['id_usuario'] ?>">
                     <select name="rol">

@@ -17,4 +17,35 @@ class Tema {
         $result = $this->db->query($sql);
         return $result;
     }
+    public function save($titulo, $descripcion, $id_usuario) {
+        $stmt = $this->db->prepare("INSERT INTO temas (titulo, descripcion, id_usuario) VALUES (?, ?, ?)");
+        if (!$stmt) {
+            die("Error en prepare: " . $this->db->error);
+        }
+        return $stmt->execute([$titulo, $descripcion, $id_usuario]);
+    }
+    public function getById($id_tema) {
+        $stmt = $this->db->prepare("SELECT t.*, u.nombre AS autor 
+                                FROM temas t 
+                                JOIN usuarios u ON t.id_usuario = u.id_usuario 
+                                WHERE t.id_tema = ?");
+        $stmt->bind_param("i", $id_tema);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    public function delete($id_tema) {
+        $stmt = $this->db->prepare("DELETE FROM temas WHERE id_tema = ?");
+        $stmt->bind_param("i", $id_tema);
+        return $stmt->execute();
+    }
+    public function getByUsuario($id_usuario) {
+        $stmt = $this->db->prepare("SELECT * FROM temas WHERE id_usuario = ? ORDER BY fecha_creacion DESC");
+        $stmt->bind_param("i", $id_usuario);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+
 }
