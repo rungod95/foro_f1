@@ -33,9 +33,18 @@ class UsuarioController {
             $exito = $usuarioModel->registrar($nombre, $email, $password);
 
             if ($exito) {
+                // Enviar correo de bienvenida
+                $asunto = "¡Bienvenido al Foro de Fórmula 1!";
+                $mensaje = "Hola $nombre,\n\nGracias por registrarte en el foro. ¡Esperamos tus aportes en los debates de F1!\n\n- El equipo del foro";
+                $cabeceras = "From: foro@f1local.com";
+
+                mail($email, $asunto, $mensaje, $cabeceras);
+
                 header("Location: index.php?controller=usuario&action=login");
                 exit;
-            } else {
+
+
+        } else {
                 $error = "Error al registrar el usuario.";
             }
         }
@@ -48,4 +57,23 @@ class UsuarioController {
         session_destroy();
         header("Location: index.php?controller=usuario&action=login");
     }
+
+    public function historial() {
+        session_start();
+
+        // Ver usuario desde parámetro o desde sesión
+        $id_usuario = $_GET['id'] ?? $_SESSION['usuario']['id_usuario'];
+
+        require_once 'models/Tema.php';
+        require_once 'models/Comentario.php';
+
+        $temaModel = new Tema();
+        $comentarioModel = new Comentario();
+
+        $temas = $temaModel->getByUsuario($id_usuario);
+        $comentarios = $comentarioModel->getByUsuario($id_usuario);
+
+        require_once 'views/usuario/historial.php';
+    }
+
 }
