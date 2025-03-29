@@ -34,5 +34,21 @@ class Usuario {
 
         return false;
     }
+    public function getAll() {
+        $result = $this->db->query("SELECT id_usuario, nombre, email, rol FROM usuarios ORDER BY nombre ASC");
+        return $result;
+    }
+
+    public function actualizarRol($id_usuario, $rol) {
+        $stmt = $this->db->prepare("UPDATE usuarios SET rol = ? WHERE id_usuario = ?");
+        $stmt->bind_param("si", $rol, $id_usuario);
+        return $stmt->execute();
+    }
+    public function eliminar($id_usuario) {
+        $stmt = $this->db->prepare("DELETE FROM usuarios WHERE id_usuario = ?");
+        $stmt->bind_param("i", $id_usuario);
+        return $stmt->execute();
+    }
+
 
 }
