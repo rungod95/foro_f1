@@ -11,7 +11,16 @@ session_start();
 </head>
 <body>
 <header>
-    <h1>Foro Fórmula 1</h1>
+    <h1>
+        <?php if (isset($_SESSION['usuario'])): ?>
+            <a href="<?= BASE_URL ?>index.php?controller=tema&action=index" class="logo-link">🏁 Foro Fórmula 1</a>
+        <?php else: ?>
+            🏁 Foro Fórmula 1
+        <?php endif; ?>
+    </h1>
+
+
+
     <nav>
         <?php if (isset($_SESSION['usuario'])): ?>
             <span>Bienvenido, <strong><?= htmlspecialchars($_SESSION['usuario']['nombre']) ?></strong></span> |

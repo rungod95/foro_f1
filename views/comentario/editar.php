@@ -9,6 +9,7 @@
     <input type="submit" value="Guardar cambios">
 </form>
 
-<a href="<?= BASE_URL ?>index.php?controller=tema&action=ver&id=<?= $_GET['tema'] ?>">⬅ Volver</a>
+<a href="<?= BASE_URL ?>index.php?controller=tema&action=index" class="btn btn-white">⬅️ Volver</a>
+
 
 <?php require_once 'views/layout/footer.php'; ?>

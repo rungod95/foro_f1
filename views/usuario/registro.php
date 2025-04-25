@@ -1,15 +1,18 @@
 <?php require_once 'views/layout/header.php'; ?>
-<h2>Registro</h2>
 
-<?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+<div class="form-container">
+    <h2>Registro</h2>
 
-<form method="POST" action="">
+    <?php if (isset($error)) echo "<p class='form-error'>$error</p>"; ?>
 
-    <input type="text" name="nombre" placeholder="Nombre" required><br>
-    <input type="email" name="email" placeholder="Correo" required><br>
-    <input type="password" name="password" placeholder="Contraseña" required><br>
-    <input type="submit" value="Registrarse">
-</form>
+    <form method="POST" action="">
+        <input type="text" name="nombre" placeholder="Nombre" required><br>
+        <input type="email" name="email" placeholder="Correo" required><br>
+        <input type="password" name="password" placeholder="Contraseña" required><br>
+        <input type="submit" class="btn btn-red" value="Registrarse">
+    </form>
 
-<a href="index.php?controller=usuario&action=login">Ya tengo cuenta</a>
+    <a href="<?= BASE_URL ?>index.php?controller=usuario&action=login" class="btn btn-white">Ya tengo cuenta</a>
+</div>
+
 <?php require_once 'views/layout/footer.php'; ?>

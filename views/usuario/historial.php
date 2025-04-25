@@ -31,6 +31,6 @@
     <p>No ha comentado aún.</p>
 <?php endif; ?>
 
-<a href="<?= BASE_URL ?>index.php?controller=tema&action=index">⬅ Volver</a>
+<a href="<?= BASE_URL ?>index.php?controller=tema&action=index" class="btn btn-white">⬅️ Volver</a>
 
 <?php require_once 'views/layout/footer.php'; ?>

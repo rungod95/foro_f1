@@ -4,15 +4,16 @@ require_once 'models/Tema.php';
 class TemaController {
 
     public function index() {
-        session_start();
-
-        if (!isset($_SESSION['usuario'])) {
-            header("Location: index.php?controller=usuario&action=login");
-            exit;
-        }
-
+        require_once 'models/Tema.php';
         $temaModel = new Tema();
-        $temas = $temaModel->getAll();
+
+        $categoria = $_GET['categoria'] ?? null;
+
+        if ($categoria && $categoria !== 'Todos') {
+            $temas = $temaModel->getByCategoria($categoria);
+        } else {
+            $temas = $temaModel->getAll();
+        }
 
         require_once 'views/tema/index.php';
     }
@@ -36,10 +37,11 @@ class TemaController {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $titulo = $_POST['titulo'];
             $descripcion = $_POST['descripcion'];
+            $categoria = $_POST['categoria']; // <-- CORRECTO
             $id_usuario = $_SESSION['usuario']['id_usuario'];
 
             $temaModel = new Tema();
-            $exito = $temaModel->save($titulo, $descripcion, $id_usuario);
+            $exito = $temaModel->save($titulo, $descripcion, $id_usuario, $categoria); // <-- OK
 
             if ($exito) {
                 header("Location: index.php?controller=tema&action=index");
@@ -50,6 +52,7 @@ class TemaController {
             }
         }
     }
+
     public function ver() {
         session_start();
         if (!isset($_GET['id'])) {

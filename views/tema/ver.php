@@ -25,23 +25,22 @@ require_once 'views/layout/header.php'; ?>
             <small><em><?= htmlspecialchars($comentario['autor']) ?> - <?= $comentario['fecha'] ?></em></small>
         </div>
 
-        <p><?= nl2br(htmlspecialchars($comentario['contenido'])) ?></p>
-            <small><em><?= htmlspecialchars($comentario['autor']) ?> - <?= $comentario['fecha'] ?></em></small>
 
             <?php if (
                 isset($_SESSION['usuario']) &&
                 ($_SESSION['usuario']['id_usuario'] == $comentario['id_usuario'] || $_SESSION['usuario']['rol'] == 'admin')
             ): ?>
-                <form method="POST" action="<?= BASE_URL ?>index.php?controller=comentario&action=eliminar" style="display:inline;">
-                    <input type="hidden" name="id_comentario" value="<?= $comentario['id_comentario'] ?>">
-                    <input type="hidden" name="id_tema" value="<?= $tema['id_tema'] ?>">
-                    <button type="submit" onclick="return confirm('¿Eliminar este comentario?')">🗑 Eliminar</button>
-                </form>
+            <form method="POST" action="<?= BASE_URL ?>index.php?controller=comentario&action=eliminar" style="display:inline;">
+                <input type="hidden" name="id_comentario" value="<?= $comentario['id_comentario'] ?>">
+                <input type="hidden" name="id_tema" value="<?= $tema['id_tema'] ?>">
+                <button type="submit" class="btn-mini" onclick="return confirm('¿Eliminar este comentario?')">🗑</button>
+            </form>
 
-                <?php if ($_SESSION['usuario']['id_usuario'] == $comentario['id_usuario']): ?>
-                    <a href="<?= BASE_URL ?>index.php?controller=comentario&action=editar&id=<?= $comentario['id_comentario'] ?>&tema=<?= $tema['id_tema'] ?>">✏️ Editar</a>
-                <?php endif; ?>
+            <?php if ($_SESSION['usuario']['id_usuario'] == $comentario['id_usuario']): ?>
+                <a href="<?= BASE_URL ?>index.php?controller=comentario&action=editar&id=<?= $comentario['id_comentario'] ?>&tema=<?= $tema['id_tema'] ?>" class="btn-mini">✏️</a>
             <?php endif; ?>
+
+                    <?php endif; ?>
 
         </div>
 
@@ -49,7 +48,7 @@ require_once 'views/layout/header.php'; ?>
 <?php else: ?>
     <p>No hay comentarios aún.</p>
 <?php endif; ?>
-<hr style="margin: 30px 0; border: none; border-top: 2px dashed #ccc;">
+<hr style="margin: 50px 0; border: none; border-top: 2px dashed #ccc;">
 
 <?php if (isset($_SESSION['usuario'])): ?>
     <h4>Añadir comentario</h4>
@@ -62,6 +61,7 @@ require_once 'views/layout/header.php'; ?>
     <p><a href="<?= BASE_URL ?>index.php?controller=usuario&action=login">Inicia sesión</a> para comentar.</p>
 <?php endif; ?>
 
-<a href="<?= BASE_URL ?>index.php?controller=tema&action=index">⬅ Volver</a>
+<a href="<?= BASE_URL ?>index.php?controller=tema&action=index" class="btn btn-white">⬅️ Volver</a>
+
 
 <?php require_once 'views/layout/footer.php'; ?>

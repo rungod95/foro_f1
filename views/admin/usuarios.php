@@ -14,39 +14,40 @@
             <td><?= htmlspecialchars($u['nombre']) ?></td>
             <td><?= htmlspecialchars($u['email']) ?></td>
             <td>
-    <span class="<?= $u['rol'] == 'admin' ? 'rol-admin' : 'rol-usuario' ?>">
-        <?= $u['rol'] ?>
-    </span>
+        <span class="<?= $u['rol'] == 'admin' ? 'rol-admin' : 'rol-usuario' ?>">
+            <?= $u['rol'] ?>
+        </span>
             </td>
 
-            <!-- Cambiar rol -->
-                <form method="POST" action="<?= BASE_URL ?>index.php?controller=admin&action=cambiarRol" style="margin-bottom: 5px;">
+            <td>
+                <form method="POST" action="<?= BASE_URL ?>index.php?controller=admin&action=cambiarRol" style="display: inline-block;">
                     <input type="hidden" name="id_usuario" value="<?= $u['id_usuario'] ?>">
                     <select name="rol">
                         <option value="usuario" <?= $u['rol'] == 'usuario' ? 'selected' : '' ?>>usuario</option>
                         <option value="admin" <?= $u['rol'] == 'admin' ? 'selected' : '' ?>>admin</option>
                     </select>
-                    <input type="submit" value="Guardar"></td>
-                    <td>
-                        <a href="<?= BASE_URL ?>index.php?controller=usuario&action=historial&id=<?= $u['id_usuario'] ?>">📜 Ver historial</a>
-                    </td>
+                    <input type="submit" class="btn-mini" value="Guardar">
                 </form>
 
-                <!-- Eliminar usuario (excepto a sí mismo) -->
+                <br>
+
+                <a href="<?= BASE_URL ?>index.php?controller=usuario&action=historial&id=<?= $u['id_usuario'] ?>" class="btn-mini">📜 Historial</a>
+
                 <?php if ($_SESSION['usuario']['id_usuario'] != $u['id_usuario']): ?>
-                    <form method="POST" action="<?= BASE_URL ?>index.php?controller=admin&action=eliminarUsuario" onsubmit="return confirm('¿Seguro que deseas eliminar a <?= htmlspecialchars($u['nombre']) ?>?')">
+                    <form method="POST" action="<?= BASE_URL ?>index.php?controller=admin&action=eliminarUsuario" onsubmit="return confirm('¿Seguro que deseas eliminar a <?= htmlspecialchars($u['nombre']) ?>?')" style="display:inline-block; margin-top: 5px;">
                         <input type="hidden" name="id_usuario" value="<?= $u['id_usuario'] ?>">
-                        <input type="submit" value="🗑 Eliminar">
+                        <input type="submit" class="btn-mini" value="🗑">
                     </form>
                 <?php else: ?>
-                    <em>No puedes eliminarte a ti mismo</em>
+                    <br><em style="font-size: 0.8em;">No puedes eliminarte a ti mismo</em>
                 <?php endif; ?>
             </td>
-
         </tr>
+
     <?php endwhile; ?>
 </table>
 
-<a href="<?= BASE_URL ?>index.php?controller=tema&action=index">⬅ Volver</a>
+<a href="<?= BASE_URL ?>index.php?controller=tema&action=index" class="btn btn-white">⬅️ Volver</a>
+
 
 <?php require_once 'views/layout/footer.php'; ?>
