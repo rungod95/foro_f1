@@ -33,7 +33,8 @@ class AdminController {
         header("Location: index.php?controller=admin&action=usuarios");
         exit;
     }
-    public function eliminarUsuario() {
+    public function eliminarUsuario()
+    {
         session_start();
 
         if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'admin') {
@@ -55,5 +56,4 @@ class AdminController {
         header("Location: index.php?controller=admin&action=usuarios");
         exit;
     }
-
 }
